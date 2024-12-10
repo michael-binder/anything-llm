@@ -15,6 +15,7 @@ import Appearance from "@/models/appearance";
 import useTextSize from "@/hooks/useTextSize";
 import { v4 } from "uuid";
 import { useChatMessageAlignment } from "@/hooks/useChatMessageAlignment";
+import { useTranslation } from "react-i18next";
 
 export default function ChatHistory({
   history = [],
@@ -35,6 +36,7 @@ export default function ChatHistory({
   const { showScrollbar } = Appearance.getSettings();
   const { textSizeClass } = useTextSize();
   const { getMessageAlignment } = useChatMessageAlignment();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!isUserScrolling && (isAtBottom || isStreaming)) {
@@ -182,22 +184,28 @@ export default function ChatHistory({
       <div className="flex flex-col h-full md:mt-0 pb-44 md:pb-40 w-full justify-end items-center">
         <div className="flex flex-col items-center md:items-start md:max-w-[600px] w-full px-4">
           <p className="text-white/60 text-lg font-base py-4">
-            Welcome to your new workspace.
+            {t("chat-history.welcome")}
           </p>
           {!user || user.role !== "default" ? (
             <p className="w-full items-center text-white/60 text-lg font-base flex flex-col md:flex-row gap-x-1">
-              To get started either{" "}
+              {t("chat-history.get-started-either")}{" "}
               <span
                 className="underline font-medium cursor-pointer"
                 onClick={showModal}
               >
-                upload a document
+                {t("chat-history.upload-doc")}
               </span>
-              or <b className="font-medium italic">send a chat.</b>
+              {t("chat-history.or")}{" "}
+              <b className="font-medium italic">
+                {t("chat-history.send-chat")}
+              </b>
             </p>
           ) : (
             <p className="w-full items-center text-white/60 text-lg font-base flex flex-col md:flex-row gap-x-1">
-              To get started <b className="font-medium italic">send a chat.</b>
+              {t("chat-history.get-started")}{" "}
+              <b className="font-medium italic">
+                {t("chat-history.send-chat")}
+              </b>
             </p>
           )}
           <WorkspaceChatSuggestions
